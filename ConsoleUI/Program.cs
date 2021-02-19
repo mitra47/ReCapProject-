@@ -248,9 +248,9 @@ namespace ConsoleUI
             string UserEmail = Console.ReadLine();
             Console.Clear();
             Console.Write("Password: ");
-            int UserPassword = Convert.ToInt32(Console.ReadLine());
+            string UserPassword = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine(userManager.Add(new User{FirstName = UserName,LastName = UserLastName,Email = UserEmail,Password = UserPassword}).Message);
+            Console.WriteLine(userManager.Add(new User{FirstName = UserName,LastName = UserLastName,Email = UserEmail,Password=UserPassword}).Message);
         }
         private static void AddCar(CarManager carManager,BrandManager brandManager,ColorManager colorManager)
         {

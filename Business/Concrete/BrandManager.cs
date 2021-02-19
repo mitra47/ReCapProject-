@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using FluentValidation;
 
 namespace Business.Concrete
 {
-    public class BrandManager:IBrandService
+    public class BrandManager : IBrandService
     {
         IBrandDal _brandDal;
 
@@ -19,19 +23,15 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
-            if (brand.Name.Length > 2)
-            {
-                _brandDal.Add(brand);
-                return new SuccessResult(Messages.Added);
-            }
-            else
-            {
-                return new ErrorResult(Messages.NameInvalid);
-            }
             
-            
+            //business codes
+
+            _brandDal.Add(brand);
+
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Update(Brand brand)
@@ -45,7 +45,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.NameInvalid);
             }
-            
+
         }
 
         public IResult Delete(Brand brand)
@@ -56,7 +56,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.Listed);
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<Brand> GetById(int id)

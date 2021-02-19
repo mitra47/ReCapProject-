@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,11 +23,14 @@ namespace Business.Concrete
             _rentalDal = rentalDal;
         }
 
-
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            
+
+            //business codes
+
             _rentalDal.Add(rental);
+
             return new SuccessResult(Messages.Added);
         }
 
@@ -40,7 +46,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult(Messages.Undelivered);
             }
-            _rentalDal.Update(rental);
+            
 
         }
 
