@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -14,7 +15,7 @@ using Entities.DTOs;
 
 namespace Business.Concrete
 {
-    public class CarManager:ICarService
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -22,25 +23,35 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
             //business codes(iş Kodları)
             //validation (dogrulama kodu)
-           
+
             //business codes
+            if (CheckIfCarCountCategoryCorrect(car.Id).Success)
+            {
+                _carDal.Add(car);
 
-            _carDal.Add(car);
+                return new SuccessResult(Messages.Added);
+            }
+            return new ErrorResult();
 
-            return new SuccessResult(Messages.Added);
         }
-
+        [SecuredOperation("car.add,admin")]
         public IResult Update(Car car)
         {
-            _carDal.Update(car);
-            return new SuccessResult(Messages.Updated);
-        }
+            if (CheckIfCarCountCategoryCorrect(car.Id).Success)
+            {
+                _carDal.Update(car);
 
+                return new SuccessResult(Messages.Updated);
+            }
+            return new ErrorResult();
+        }
+        [SecuredOperation("car.add,admin")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -49,7 +60,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.Listed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
         }
 
         public IDataResult<Car> GetById(int id)
@@ -79,7 +90,17 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails()); 
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+        }
+
+        private IResult CheckIfCarCountCategoryCorrect(int Id)
+        {
+            var result = _carDal.GetAll(p => p.Id == Id).Count;
+            if (result >= 10)
+            {
+                return new ErrorResult(Messages.CarCountOfCategoryError);
+            }
+            return new SuccessResult();
         }
     }
 }
