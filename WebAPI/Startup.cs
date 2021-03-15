@@ -38,7 +38,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddCors();
             //services.AddSingleton<IBrandService, BrandManager>();
             //services.AddSingleton<IBrandDal, EfBrandDal>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -71,6 +71,8 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:4205").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
