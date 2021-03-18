@@ -51,12 +51,12 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetById(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImagesDal.Get(p => p.ImagesId == id));
+            return new SuccessDataResult<CarImage>(_carImagesDal.Get(p => p.CarImageId == id));
         }
         [ValidationAspect(typeof(CarImagesValidator))]
         public IResult Update(IFormFile file,CarImage images )
         {
-            images.ImagePath = FileHelper.Update(_carImagesDal.Get(p => p.ImagesId == images.ImagesId).ImagePath, file);
+            images.ImagePath = FileHelper.Update(_carImagesDal.Get(p => p.CarImageId == images.CarImageId).ImagePath, file);
             images.Date = DateTime.Now;
             _carImagesDal.Update(images);
             return new SuccessResult();
@@ -84,7 +84,7 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> Get(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImagesDal.Get(p => p.ImagesId == id));
+            return new SuccessDataResult<CarImage>(_carImagesDal.Get(p => p.CarImageId == id));
         }
     }
 }

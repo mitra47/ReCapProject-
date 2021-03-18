@@ -7,7 +7,7 @@ namespace Entities.DTOs
 {
     class ImagesDetailDto: IDto
     {
-        public int ImagesId { get; set; }
+        public int CarImageId { get; set; }
         public int CarId { get; set; }
         public string ImagePath { get; set; }
         public DateTime Date { get; set; }

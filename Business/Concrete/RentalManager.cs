@@ -37,7 +37,7 @@ namespace Business.Concrete
         public IResult Update(Rental rental)
         {
             
-            if (GetById(rental.Id).Data.ReturnDate == null)
+            if (GetById(rental.RentalId).Data.ReturnDate == null)
             {
                 
                 return new SuccessResult(Messages.Updated);
@@ -68,7 +68,7 @@ namespace Business.Concrete
         }
         public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id));
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentalId == id));
         }
     }
 }

@@ -21,16 +21,16 @@ namespace DataAccess.Concrete.InMemory
         }
         public void Add(CarImage images)
         {
-            images.ImagesId = _carImagess.Last().ImagesId + 5;
+            images.CarImageId = _carImagess.Last().CarImageId + 5;
             _carImagess.Add(images);
-            Console.WriteLine("Resimiz  basariyla eklendi.", images.ImagesId);
+            Console.WriteLine("Resimiz  basariyla eklendi.", images.CarImageId);
         }
 
         public void Delete(CarImage images)
         {
-            CarImage ımagesToDelete = _carImagess.SingleOrDefault(b => b.ImagesId == images.ImagesId);
+            CarImage ımagesToDelete = _carImagess.SingleOrDefault(b => b.CarImageId == images.CarImageId);
             _carImagess.Remove(ımagesToDelete);
-            Console.WriteLine("{0} Basarili bir sekilde sistemden silinmistir.", ımagesToDelete.ImagesId);
+            Console.WriteLine("{0} Basarili bir sekilde sistemden silinmistir.", ımagesToDelete.CarImageId);
         }
 
         public CarImage Get(Expression<Func<CarImage, bool>> filter = null)

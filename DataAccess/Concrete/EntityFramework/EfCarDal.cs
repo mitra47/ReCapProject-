@@ -21,10 +21,10 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from c in context.Cars
                     join b in context.Brands
-                        on c.BrandId equals b.Id
+                        on c.BrandId equals b.BrandId
                     join r in context.Colors
-                        on c.ColorId equals r.Id
-                    select new CarDetailDto {CarId = c.Id,BrandId = b.Id,ColorId =r.Id ,BrandName= b.Name,ModelYear = c.ModelYear,ColorName = r.Name,DailyPrice = c.DailyPrice,Description = c.Description};
+                        on c.ColorId equals r.ColorId
+                    select new CarDetailDto {CarId = c.CarId,BrandId = b.BrandId,ColorId =r.ColorId ,BrandName= b.BrandName,ModelYear = c.ModelYear,ColorName = r.ColorName,DailyPrice = c.DailyPrice,Description = c.Description};
                 return result.ToList();
             }
         }

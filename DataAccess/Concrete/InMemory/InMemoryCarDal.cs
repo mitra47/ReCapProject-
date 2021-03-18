@@ -18,11 +18,11 @@ namespace DataAccess.Concrete.InMemory
             _cars = new List<Car>
             {
                 //Bir veri tabanindan geliyormus gibi simule ediyoruz.
-                new Car{Id = 1,BrandId = 1,ColorId = 1,ModelYear=2008,DailyPrice = 100,Description = "RENT A CAR KASKOLUDUR.BAKIMLIDIR"},
-                new Car{Id = 2,BrandId = 2,ColorId = 2,ModelYear=2014,DailyPrice = 200,Description = "AZ YAKAR, UZMEZ."},
-                new Car{Id = 3,BrandId = 3,ColorId = 2,ModelYear=2013,DailyPrice = 180,Description = "OTOMATIK VITES,SORUNSUZDUR"},
-                new Car{Id = 4,BrandId = 3,ColorId = 3,ModelYear=2012,DailyPrice = 250,Description = "TAM BIR UZUN YOL ARACIDIR"},
-                new Car{Id = 5,BrandId = 4,ColorId = 3,ModelYear=2018,DailyPrice = 400,Description = "SUNROOFLU VE EN DOLUSUDUR."},
+                new Car{CarId = 1,BrandId = 1,ColorId = 1,ModelYear=2008,DailyPrice = 100,Description = "RENT A CAR KASKOLUDUR.BAKIMLIDIR"},
+                new Car{CarId = 2,BrandId = 2,ColorId = 2,ModelYear=2014,DailyPrice = 200,Description = "AZ YAKAR, UZMEZ."},
+                new Car{CarId = 3,BrandId = 3,ColorId = 2,ModelYear=2013,DailyPrice = 180,Description = "OTOMATIK VITES,SORUNSUZDUR"},
+                new Car{CarId = 4,BrandId = 3,ColorId = 3,ModelYear=2012,DailyPrice = 250,Description = "TAM BIR UZUN YOL ARACIDIR"},
+                new Car{CarId = 5,BrandId = 4,ColorId = 3,ModelYear=2018,DailyPrice = 400,Description = "SUNROOFLU VE EN DOLUSUDUR."},
             };
         }
 
@@ -39,7 +39,7 @@ namespace DataAccess.Concrete.InMemory
 
         public void Add(Car car)
         {
-            car.Id = _cars.Last().Id + 1;
+            car.CarId = _cars.Last().CarId + 1;
             _cars.Add(car);
             Console.WriteLine("Araciniz {0} TL fiyat etiketi ile basariyla eklendi.",car.DailyPrice);
         }
@@ -49,7 +49,7 @@ namespace DataAccess.Concrete.InMemory
             //guncellemek icin gonderilen car objesinin id sini tum car objelerinin bulundugu _cars objesinde ara esleseni carToUpdate
             //isimli yeni car nesnesine tuttur.
             Car carToUpdate = null;
-            carToUpdate = _cars.SingleOrDefault(c => c.Id == car.Id);
+            carToUpdate = _cars.SingleOrDefault(c => c.CarId == car.CarId);
 
             //gonderilen bilgiler ile car objesini guncelle
             carToUpdate.BrandId = car.BrandId;
@@ -66,7 +66,7 @@ namespace DataAccess.Concrete.InMemory
             //gonderilen urun id'sine sahip olan urunu listede bul ve sil
             Car carToDelete = null;
 
-            carToDelete = _cars.SingleOrDefault(c => c.Id == car.Id);
+            carToDelete = _cars.SingleOrDefault(c => c.CarId == car.CarId);
             _cars.Remove(carToDelete);
             Console.WriteLine("Silinmesini istediginiz {0} model araba basariyla silindi.", carToDelete.ModelYear);
         }
@@ -78,7 +78,7 @@ namespace DataAccess.Concrete.InMemory
 
         public Car GetById(Car car)
         {
-            return _cars.SingleOrDefault(c => c.Id == car.Id);
+            return _cars.SingleOrDefault(c => c.CarId == car.CarId);
         }
 
         public List<Car> GetAll()

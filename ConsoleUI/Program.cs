@@ -184,7 +184,7 @@ namespace ConsoleUI
             foreach (var rental in rentalManager.GetAllRentalDetail().Data)
             {
                 var table = new ConsoleTable("Kiralama Id", "Musteri Adi", "Musteri Soyadi", "Arac Markasi", "Arac Modeli", "Açıklama", "Kiralama Tarihi", "Teslim Tarihi");
-                table.AddRow(rental.Id, rental.CustomerFirstName, rental.CustomerLastName, rental.CarBrand, rental.CarModel, rental.CarDescription
+                table.AddRow(rental.RentalId, rental.CustomerFirstName, rental.CustomerLastName, rental.CarBrand, rental.CarModel, rental.CarDescription
                 , rental.RentDate, rental.ReturnDate);
                 table.Write();
             }
@@ -208,7 +208,7 @@ namespace ConsoleUI
             Console.Write("Lutfen kiralamak istediginiz aracin Id: ");
             int RentId = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
-            Console.WriteLine(rentalManager.Update(new Rental { Id = RentId, RentDate = DateTime.Now }).Message);
+            Console.WriteLine(rentalManager.Update(new Rental { RentalId = RentId, RentDate = DateTime.Now }).Message);
         }
         private static void UpdateRental2(RentalManager rentalManager, CustomerManager customerManager, CarManager carManager)
         {
@@ -217,7 +217,7 @@ namespace ConsoleUI
             Console.Write("Teslim etmek istediginiz aracin id:  ");
             int RentId = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
-            Console.WriteLine(rentalManager.Update(new Rental { Id = RentId, ReturnDate = DateTime.Now }).Message);
+            Console.WriteLine(rentalManager.Update(new Rental { RentalId = RentId, ReturnDate = DateTime.Now }).Message);
         }
 
 
@@ -279,7 +279,7 @@ namespace ConsoleUI
             Console.Write("\nLütfen Sistemden Silinmesini İstediğiniz Aracın Id Numarasını Yukarıda Ki Listeden Seçerek Giriniz:");
             int id = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
-            carManager.Delete(new Car { Id = id });
+            carManager.Delete(new Car { CarId = id });
         }
         private static void ListCars(CarManager carManager)
         {
@@ -310,7 +310,7 @@ namespace ConsoleUI
             Console.Write("Araç Açıklaması:");
             string Description = Console.ReadLine();
             Console.Clear();
-            carManager.Update(new Car { Id = id, BrandId = BrandId, ColorId = ColorId, ModelYear = ModelYear, DailyPrice = DailyPrice, Description = Description });
+            carManager.Update(new Car { CarId = id, BrandId = BrandId, ColorId = ColorId, ModelYear = ModelYear, DailyPrice = DailyPrice, Description = Description });
         }
 
         private static void AddBrand(BrandManager brandManager)
@@ -319,7 +319,7 @@ namespace ConsoleUI
             int brandId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Lutfen Markanın Adını Giriniz:");
             string brandName = Console.ReadLine();
-            brandManager.Add(new Brand { Id = brandId, Name = brandName });
+            brandManager.Add(new Brand { BrandId = brandId, BrandName = brandName });
         }
 
         public static void DeleteBrand(BrandManager brandManager)
@@ -327,11 +327,11 @@ namespace ConsoleUI
             Console.Clear();
             foreach (var brand in brandManager.GetAll().Data)
             {
-                Console.WriteLine($"{brand.Id}. {brand.Name}");
+                Console.WriteLine($"{brand.BrandId}. {brand.BrandName}");
             }
             Console.Write("Lütfen Sistemden Silmek Istediğiniz Markanın Id sini Giriniz:");
             int brandId = Convert.ToInt32(Console.ReadLine());
-            brandManager.Delete(new Brand { Id = brandId });
+            brandManager.Delete(new Brand { BrandId = brandId });
         }
 
         public static void ListBrands(BrandManager brandManager)
@@ -340,7 +340,7 @@ namespace ConsoleUI
             Console.WriteLine("--Tüm Markalar--");
             foreach (var brand in brandManager.GetAll().Data)
             {
-                Console.WriteLine($"{brand.Id}. {brand.Name}");
+                Console.WriteLine($"{brand.BrandId}. {brand.BrandName}");
             }
         }
 
@@ -350,7 +350,7 @@ namespace ConsoleUI
             Console.WriteLine("--Tüm Renkler--");
             foreach (var color in colorManager.GetAll().Data)
             {
-                Console.WriteLine($"{color.Id}. {color.Name}");
+                Console.WriteLine($"{color.ColorId}. {color.ColorName}");
             }
         }
 
@@ -359,9 +359,9 @@ namespace ConsoleUI
             Console.Clear();
             foreach (var car in carManager.GetAll().Data)
             {
-                foreach (var brand in brandManager.GetAll().Data.Where(p => p.Id == car.BrandId))
+                foreach (var brand in brandManager.GetAll().Data.Where(p => p.BrandId == car.BrandId))
                 {
-                    Console.WriteLine(" Marka:{0} Çıkış Yılı:{1} Fiyat:{2}\n", brand.Name, car.ModelYear, car.DailyPrice);
+                    Console.WriteLine(" Marka:{0} Çıkış Yılı:{1} Fiyat:{2}\n", brand.BrandName, car.ModelYear, car.DailyPrice);
                 }
             }
         }
@@ -371,9 +371,9 @@ namespace ConsoleUI
             Console.Clear();
             foreach (var car in carManager.GetAll().Data)
             {
-                foreach (var brand in brandManager.GetAll().Data.Where(p => p.Id == car.BrandId))
+                foreach (var brand in brandManager.GetAll().Data.Where(p => p.BrandId == car.BrandId))
                 {
-                    Console.WriteLine(" Marka:{0} Çıkış Yılı:{1} Fiyat:{2}\n", brand.Name, car.ModelYear, car.DailyPrice);
+                    Console.WriteLine(" Marka:{0} Çıkış Yılı:{1} Fiyat:{2}\n", brand.BrandName, car.ModelYear, car.DailyPrice);
                 }
             }
         }

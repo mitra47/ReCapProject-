@@ -37,7 +37,7 @@ namespace Business.Concrete
         [SecuredOperation("brand.add,admin")]
         public IResult Update(Brand brand)
         {
-            if (brand.Name.Length > 2)
+            if (brand.BrandName.Length > 2)
             {
                 _brandDal.Update(brand);
                 return new SuccessResult(Messages.Updated);
@@ -62,7 +62,7 @@ namespace Business.Concrete
 
         public IDataResult<Brand> GetById(int id)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(p => p.Id == id));
+            return new SuccessDataResult<Brand>(_brandDal.Get(p => p.BrandId == id));
         }
     }
 }

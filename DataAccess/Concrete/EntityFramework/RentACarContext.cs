@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-5MQSLLM\SQLSERVER;Database=master;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-5MQSLLM\SQLSERVER;Database=RentDb;Trusted_Connection=true");
         }
 
         public DbSet<Car> Cars { get; set; }

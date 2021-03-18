@@ -16,11 +16,11 @@ namespace DataAccess.Concrete.InMemory
         {
             _brands = new List<Brand>
             {
-                new Brand{Id = 1,Name = "HONDA"},
-                new Brand{Id = 2,Name = "TOYOTA"},
-                new Brand{Id = 3,Name = "FORD"},
-                new Brand{Id = 4,Name = "FIAT"},
-                new Brand{Id = 5,Name = "MERCEDES"}
+                new Brand{BrandId = 1,BrandName = "HONDA"},
+                new Brand{BrandId = 2,BrandName = "TOYOTA"},
+                new Brand{BrandId = 3,BrandName = "FORD"},
+                new Brand{BrandId = 4,BrandName = "FIAT"},
+                new Brand{BrandId = 5,BrandName = "MERCEDES"}
             };
         }
 
@@ -36,24 +36,24 @@ namespace DataAccess.Concrete.InMemory
 
         public void Add(Brand brand)
         {
-            brand.Id = _brands.Last().Id + 1;
+            brand.BrandId = _brands.Last().BrandId + 1;
             _brands.Add(brand);
-            Console.WriteLine("{0} Basarili bir sekilde sisteme eklenmistir.", brand.Name);
+            Console.WriteLine("{0} Basarili bir sekilde sisteme eklenmistir.", brand.BrandName);
         }
 
         public void Update(Brand brand)
         {
-            Brand brandToUpdate = _brands.SingleOrDefault(b => b.Id == brand.Id);
-            brandToUpdate.Name = brand.Name;
+            Brand brandToUpdate = _brands.SingleOrDefault(b => b.BrandId == brand.BrandId);
+            brandToUpdate.BrandName = brand.BrandName;
             Console.WriteLine("Guncelleme basarili bir sekilde gerceklestirilmistir.Guncellenen markanin yeni bilgileri asagida ki gibidir.");
-            Console.WriteLine("Marka Id:{0} Marka Ismi:{1}",brandToUpdate.Id, brandToUpdate.Name);
+            Console.WriteLine("Marka Id:{0} Marka Ismi:{1}",brandToUpdate.BrandId, brandToUpdate.BrandName);
         }
 
         public void Delete(Brand brand)
         {
-            Brand brandToDelete = _brands.SingleOrDefault(b => b.Name == brand.Name);
+            Brand brandToDelete = _brands.SingleOrDefault(b => b.BrandName == brand.BrandName);
             _brands.Remove(brandToDelete);
-            Console.WriteLine("{0} Basarili bir sekilde sistemden silinmistir.", brandToDelete.Name);
+            Console.WriteLine("{0} Basarili bir sekilde sistemden silinmistir.", brandToDelete.BrandName);
         }
 
         public List<Brand> GetAllBrands()

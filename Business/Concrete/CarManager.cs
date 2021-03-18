@@ -35,7 +35,7 @@ namespace Business.Concrete
             //validation (dogrulama kodu)
 
             //business codes
-            if (CheckIfCarCountCategoryCorrect(car.Id).Success)
+            if (CheckIfCarCountCategoryCorrect(car.CarId).Success)
             {
                 _carDal.Add(car);
 
@@ -48,7 +48,7 @@ namespace Business.Concrete
         [CacheRemoveAspect("CarService.Get")]
         public IResult Update(Car car)
         {
-            if (CheckIfCarCountCategoryCorrect(car.Id).Success)
+            if (CheckIfCarCountCategoryCorrect(car.CarId).Success)
             {
                 _carDal.Update(car);
 
@@ -71,7 +71,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         public IDataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)
@@ -101,8 +101,8 @@ namespace Business.Concrete
 
         private IResult CheckIfCarCountCategoryCorrect(int Id)
         {
-            var result = _carDal.GetAll(p => p.Id == Id).Count;
-            if (result >= 10)
+            var result = _carDal.GetAll(p => p.CarId == Id).Count;
+            if (result >= 20)
             {
                 return new ErrorResult(Messages.CarCountOfCategoryError);
             }
