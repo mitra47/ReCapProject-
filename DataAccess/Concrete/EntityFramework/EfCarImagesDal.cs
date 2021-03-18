@@ -9,5 +9,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarImagesDal :EfEntityRepositoryBase<CarImage, RentACarContext>,ICarImagesDal
     {
+       
     }
 }
